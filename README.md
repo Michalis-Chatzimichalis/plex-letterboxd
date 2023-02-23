@@ -1,4 +1,6 @@
-In this Repostiry
+# Description
+
+This project consists of 2 scripts and a serverless function using DigitalOcean's free tier to export and import a Plex watchlist to a Letterboxd account.
 
 
 ## Function
@@ -13,4 +15,4 @@ There are two scripts
 
 ## Support
 
-For further issues, create an issue and I'll look into it.
+If problems arise, create an issue and I'll look into it.

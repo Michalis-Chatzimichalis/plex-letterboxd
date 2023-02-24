@@ -8,11 +8,14 @@ This project consists of 2 scripts and a serverless function using DigitalOcean'
 The script used is called main.py, but an example has been uploaded with placeholder values (the same with the config.ini file)
 
 - main.py
-    Exports the watchlist and creates a csv File
 
+Exports the watchlist and creates a csv File
 
 - config.ini
-    Supplies the Plex login details & server name
+
+Supplies the Plex login details & server name
+
+
 
 ## Support
 

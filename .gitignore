@@ -1,0 +1,2 @@
+#Exclude config file with secret values
+config.ini

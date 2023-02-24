@@ -5,13 +5,14 @@ This project consists of 2 scripts and a serverless function using DigitalOcean'
 
 ## Function
 
-There are two scripts
+The script used is called main.py, but an example has been uploaded with placeholder values (the same with the config.ini file)
 
-```
-- functions\export-plex-watchlist.py
-- functions\import-letterboxd.py
+- main.py
+    Exports the watchlist and creates a csv File
 
-```
+
+- config.ini
+    Supplies the Plex login details & server name
 
 ## Support
 

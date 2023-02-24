@@ -1,2 +1,3 @@
-#Exclude config file with secret values
+#Exclude config file with secret / my values
 config.ini
+main.py

@@ -16,7 +16,7 @@ def parse_args():
                         help='config file')
     parser.add_argument('-o', '--output', default='letterboxd-watchlist.csv',
                         help='file to output to')
-    parser.add_argument('-s', '--sections', default=['Films', 'Films Michalis', 'TV Shows', 'TV Shows (Michalis)'], nargs='+',
+    parser.add_argument('-w', '--watchlist', nargs='+',
                         help='sections to grab from')
     parser.add_argument('-m', '--managed-user',
                         help='name of managed user to export')
@@ -35,38 +35,34 @@ def parse_config(ini):
     return auth
 
 
-def write_csv(sections, output):
+def write_csv(watchlist, output):
     #Generate Letterboxd import CSV.#
     with open(output, 'w', newline='') as f:
         writer = csv.writer(f)
-        writer.writerow(['Title', 'Year', 'Rating10', 'WatchedDate'])
+        writer.writerow(['Title', 'Year', 'tmdbID'])
 
         count = 0
-        for section in sections:
-            for movie in section.search(sort='lastViewedAt', unwatched=False):
+        for watchlist in watchlist:
+            for item in watchlist():
                 date = None
-                if movie.lastViewedAt is not None:
-                    date = movie.lastViewedAt.strftime('%Y-%m-%d')
-                rating = movie.userRating
-                if rating is not None:
-                    rating = f'{movie.userRating:.0f}'
-                writer.writerow([movie.title, movie.year, rating, date])
+                writer.writerow([item.title, item.year, item.tmdbID])
                 count += 1
-    print(f'Exported {count} movies to {output}.')
+    print(f'Exported {count} items to {output}.')
 
 
 def main():
     args = parse_args()
     auth = parse_config(args.ini)
     #Needs 
-    plex = PlexServer(auth['baseurl'], auth['token'])
+    plex = parse_config(config.ini)
+    #MyPlxAccount(auth['username'], auth['token'])
     if args.managed_user:
         myplex = plex.myPlexAccount()
         user = myplex.user(args.managed_user)
         # Get the token for your machine.
         token = user.get_token(plex.machineIdentifier)
         # Login to your server using your friends credentials.
-        plex = PlexServer(auth['baseurl'], token)
+        plex = MyPlexAccount(auth['username'], token)
 
-    sections = [plex.library.section(s) for s in args.sections]
-    write_csv(sections, args.output)
+    watchlist = [plex.library.watchlist(w) for w in args.watchlist]
+    write_csv(watchlist, args.output)
